@@ -117,3 +117,7 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+configurations.all {
+    resolutionStrategy.force 'androidx.core:core:1.9.0'
+}
