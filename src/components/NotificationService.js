@@ -1,4 +1,4 @@
-import PushNotification from 'react-native-push-notifications'
+import PushNotification from 'react-native-push-notification'
 
 class NotificationService {
     configurar = () => {

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Container, NameLogo, LoadingIcon} from './styles';
+import {Container, NameLogo, LoadingIcon} from './Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 

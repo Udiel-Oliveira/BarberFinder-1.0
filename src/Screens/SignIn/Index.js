@@ -11,7 +11,7 @@ import {
   LogoContainer,
   Saudacao,
   NameLogin,
-} from './styles';
+} from './Styles';
 import Api from '../../Api';
 import {useNavigation} from '@react-navigation/native';
 import SignInput from '../../components/SignInput';
