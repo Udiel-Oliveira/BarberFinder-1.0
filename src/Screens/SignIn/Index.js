@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Container,
   NameLogo,
@@ -11,17 +11,20 @@ import {
   LogoContainer,
   Saudacao,
   NameLogin,
-} from './Styles';
+} from './Styles';  // Verifique se todos esses estão sendo usados
 import Api from '../../Api';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import SignInput from '../../components/SignInput';
-
 import BarberLogo from '../../assets/Logo-black.svg';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
-import {Alert} from 'react-native';
+import { UserContext } from '../../contexts/UserContext';  // Adicionando {} para consistência
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default () => {
+
+  const { dispatch: userDispatch} = useContext(UserContext);
   const navigation = useNavigation();
 
   const [emailFild, setEmailFild] = useState('');
@@ -35,7 +38,18 @@ export default () => {
     if (emailFild != '' && senhaFild != '') {
       let json = await Api.signIn(emailFild, senhaFild);
       if (json.token) {
-        Alert.alert('Deu certo!');
+        await AsyncStorage.setItem('token', json.token);
+        userDispatch({
+          type: 'setAvatar',
+          payload:{
+            avatar: json.data.avatar
+          }
+        });
+
+        navigation.reset({
+          routes:[{name:"MainTab"}]
+        });
+
       } else {
         Alert.alert('Email e/ou senha incorretos!');
       }

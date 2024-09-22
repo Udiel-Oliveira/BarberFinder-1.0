@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Container,
   NameLogo,
@@ -12,13 +12,11 @@ import {
   Saudacao,
   NameLogin,
 } from './Styles';
-
+import { UserContext } from '../../contexts/UserContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../../Api';
 import {useNavigation} from '@react-navigation/native';
 import SignInput from '../../components/SignInput';
-
-/*1:29:26*/
-
 import BarberLogo from '../../assets/Logo-black.svg';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
@@ -28,11 +26,13 @@ import { Notification } from '../../components/NotificationService';
 const notificador = Notification;
 
 export default () => {
-  const navigation = useNavigation();
+  const { dispatch: userDispatch} = useContext(UserContext);
 
+  const navigation = useNavigation();
   const [nameFild, setNameFild] = useState('');
   const [emailFild, setEmailFild] = useState('');
   const [senhaFild, setSenhaFild] = useState('');
+
   const clickCadastrese = () => {
     navigation.reset({
       routes: [{name: 'SignIn'}],
@@ -42,7 +42,18 @@ export default () => {
     if (nameFild != '' && emailFild != '' && senhaFild != '') {
       let res = await Api.signUp(nameFild, emailFild, senhaFild);
       if (res.token) {
-        Alert.alert('Deu Certo!');
+        await AsyncStorage.setItem('token', res.token);
+        userDispatch({
+          type: 'setAvatar',
+          payload:{
+            avatar: res.data.avatar
+          }
+        });
+
+        navigation.reset({
+          routes:[{name:"MainTab"}]
+        });
+
       } else {
         Alert.alert('Erro: ' + res.error);
       }
