@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Preload from '../Screens/Preload';
-import SignIn from '../Screens/SignIn';
+import SignIn from '../Screens/SigIn';
 import SignUp from '../Screens/SignUp';
 
 const Stack = createStackNavigator();
