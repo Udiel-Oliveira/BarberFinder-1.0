@@ -13,10 +13,10 @@ const Tab = createBottomTabNavigator();
 
 export default () => (
     <Tab.Navigator tabBar={props=><CustomTabBar {...props}/>}>
-        <Tab.Screen name="Home" component={Home}/>
-        <Tab.Screen name="Search" component={Search}/>
-        <Tab.Screen name="Appointments" component={Appointments}/>
-        <Tab.Screen name="Favoritos" component={Favoritos}/>
-        <Tab.Screen name="Profile" component={Profile}/>
+        <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Tab.Screen name="Search" component={Search} options={{ headerShown: false }}/>
+        <Tab.Screen name="Appointments" component={Appointments} options={{ headerShown: false }}/>
+        <Tab.Screen name="Favoritos" component={Favoritos} options={{ headerShown: false }}/>
+        <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
 )
