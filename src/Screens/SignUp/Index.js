@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Container,
   NameLogo,
@@ -21,7 +21,7 @@ import BarberLogo from '../../assets/Logo-black.svg';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
 import NomeIcon from '../../assets/nome.svg';
-import {Alert} from 'react-native';
+import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import { Notification } from '../../components/NotificationService';
 const notificador = Notification;
 
@@ -50,10 +50,17 @@ export default () => {
           }
         });
 
+        notificador.mostrarNotificacao(
+          1,
+          "Cadastro Realizado",
+          "Parabéns! Seu cadastro foi realizado com sucesso!",
+          {}, 
+          {}
+        );
+
         navigation.reset({
           routes:[{name:"MainTab"}]
         });
-
       } else {
         Alert.alert('Erro: ' + res.error);
       }
@@ -62,19 +69,30 @@ export default () => {
     }
   };
 
+  // Permissao do usuario
+  async function requestNotificationPermission() {
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    }
+    return true;
+  }
+
   //Notificação
-  componentDidMount = () => {
-    notificador.configurar()
-  }
-  onPressEnviarNotificacao = () =>{
-    notificador.mostrarNotificacao(
-      1, 
-      "Ola Mundo", 
-      "Essa é minha primeira notificação", 
-      {}, 
-      {}
-    )
-  }
+  useEffect(() => {
+    async function init() {
+      const permissionGranted = await requestNotificationPermission();
+      if (permissionGranted) {
+        notificador.configurar();
+        notificador.criarCanal();
+      } else {
+        Alert.alert("Permissão de notificações não concedida.");
+      }
+    }
+    init();
+  }, []);
 
   onPressCancelarNotificacoes = () =>{
     notificador.cancelarTodasNotificacoes()
@@ -83,7 +101,7 @@ export default () => {
 
   return (
     <Container>
-      <LogoContainer onPress={onPressEnviarNotificacao}>
+      <LogoContainer>
         <BarberLogo width="10%" color="#000000" />
         <NameLogo font-size="15px">BarBerFinder</NameLogo>
       </LogoContainer>

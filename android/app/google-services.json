@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155544823810",
+    "project_id": "barberfinder-ecc6c",
+    "storage_bucket": "barberfinder-ecc6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155544823810:android:6e1b87c49fc1eb0e315f1b",
+        "android_client_info": {
+          "package_name": "com.barberfinder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqRHCgi9k2KtaRqZWh4J0avx0EuP4wsNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
