@@ -15,6 +15,8 @@ const TabArea = styled.View`
     justify-content: space-around;
     background-color: #fff;
     padding: 10px;
+    border-top-width: 2px;
+    border-top-color: #EAEAE9;
 `;
 
 const TabItem = styled.TouchableOpacity`

@@ -12,8 +12,8 @@ export const Scroller = styled.ScrollView`
 
 export const TopContent = styled.View`
     background-color: #176B70;
-    padding: 20px;
-    padding-bottom: 50px;
+    padding: 15px;
+    padding-bottom: 10px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 `;
@@ -65,4 +65,10 @@ export const LoadingIcon = styled.ActivityIndicator`
 export const ListArea = styled.View`
     margin-top: 30px;
     margin-bottom: 30px;
-`
+`;
+
+export const ImagemContent = styled.View`
+    margin-top: 15px;
+    border-radius: 10px;
+    width: 100%;
+`;

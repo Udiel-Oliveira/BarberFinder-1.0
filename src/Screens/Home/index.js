@@ -1,6 +1,7 @@
 import Reac, {useState, useEffect} from "react";
+import styled from 'styled-components/native';
 import { request,PERMISSIONS } from "react-native-permissions";
-import { Alert, Platform } from "react-native";
+import { Alert, Platform, RefreshControl } from "react-native";
 import Geolocation from "@react-native-community/geolocation";
 import { 
     Container, 
@@ -13,6 +14,7 @@ import {
     LocationFinder,
     LoadingIcon,
     ListArea,
+    ImagemContent,
     TopContent
 } from "./Styles";
 import BarberItem from '../../components/BarberItem'
@@ -21,6 +23,8 @@ import Api from "../../Api";
 import SearchIcon from '../../assets/SearchIcon-white.svg'
 import MyLocationIcon from '../../assets/MyLocationIcon.svg'
 import { useNavigation } from "@react-navigation/native";
+import MapaImagem from '../../assets/Mapa.svg'
+
 
 export default () =>{
     const navigation = useNavigation();
@@ -28,6 +32,7 @@ export default () =>{
     const [coords, setCoords] = useState(null);
     const [loading, setLoading] = useState(false);
     const [list, setList] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const handleLocationFinder = async () => {
         setCoords(null);
@@ -54,7 +59,14 @@ export default () =>{
         setLoading(true);
         setList([]);
 
-        let res  = await Api.getBarbers();
+        let lat = null;
+        let lng = null;
+        if(coords){
+            lat = coords.latitude;
+            lng = coords.longitude;
+        }
+
+        let res  = await Api.getBarbers(lat, lng, locationText);
         console.log(res);
         if(res.error == ''){
             if(res.loc){
@@ -72,9 +84,22 @@ export default () =>{
         getBarbers();
     },[]);
 
+    const onRefresh = ()=> {
+        setRefreshing(false);
+        getBarbers();
+    }
+
+    const handleLocationSearch = () => {
+        setCoords({});
+        getBarbers();
+    }
+
+
     return(
         <Container>
-            <Scroller>
+            <Scroller refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 <TopContent>
                     <HeaderAerea>
                         <HeaderTitle numberOfLines={2}>
@@ -90,11 +115,16 @@ export default () =>{
                             placeholder="Onde você está?"
                             value={locationText}
                             onChangeText={t=>setLocationText(t)}
+                            onEndEditing={handleLocationSearch}
                         />
                         <LocationFinder onPress={handleLocationFinder}>
                             <MyLocationIcon width="30" height="30" fill="#ffffff"/>
                         </LocationFinder>
                     </LocationArea>
+                    <ImagemContent>
+                        <MapaImagem width="100%"/>
+                    </ImagemContent>
+                        
                 </TopContent>
                 {loading &&
                     <LoadingIcon size="large" color="#176B70"/>
