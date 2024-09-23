@@ -1,7 +1,6 @@
 import Reac, {useState, useEffect} from "react";
-import styled from 'styled-components/native';
 import { request,PERMISSIONS } from "react-native-permissions";
-import { Alert, Platform, RefreshControl } from "react-native";
+import { Alert, Platform, RefreshControl, StatusBar } from "react-native";
 import Geolocation from "@react-native-community/geolocation";
 import { 
     Container, 
@@ -97,6 +96,7 @@ export default () =>{
 
     return(
         <Container>
+            <StatusBar barStyle="light-content" backgroundColor="#176B70" />
             <Scroller refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
