@@ -2,6 +2,8 @@ import Reac, {useState, useEffect} from "react";
 import { request,PERMISSIONS } from "react-native-permissions";
 import { Alert, Platform, RefreshControl, StatusBar } from "react-native";
 import Geolocation from "@react-native-community/geolocation";
+import { Notification } from '../../components/NotificationService'; // Ajuste o caminho se necessário
+
 import { 
     Container, 
     Scroller,
@@ -93,6 +95,20 @@ export default () =>{
         getBarbers();
     }
 
+    const handleSearchButtonClick = () => {
+        // Mostrar notificação quando o botão for clicado
+        Notification.mostrarNotificacao(
+            2, // ID da notificação
+            "Busca Iniciada", // Título da notificação
+            "Você iniciou uma busca por barbearias.", // Mensagem da notificação
+            {}, // Dados extras
+            {}  // Opções adicionais
+        );
+    
+        // Navegar para a tela de busca
+        navigation.navigate('Search');
+    };
+
 
     return(
         <Container>
@@ -105,7 +121,7 @@ export default () =>{
                         <HeaderTitle numberOfLines={2}>
                             Descubra Barbearias Perto de Você!!
                         </HeaderTitle>
-                        <SearchButton onPress={()=>navigation.navigate('Search')}>
+                        <SearchButton onPress={handleSearchButtonClick}>
                             <SearchIcon width="16" height="16" color="#FFFFFF"/>
                         </SearchButton>
                     </HeaderAerea>

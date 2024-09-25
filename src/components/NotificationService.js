@@ -33,8 +33,6 @@ class NotificationService {
             id: id,
             channelId: "notificador",
             autoCancel: true,
-            largeIcon: options.largeIcon || "logoBarber",
-            smallIcon: options.smallIcon || "logoBarber",
             bigText: message || "",
             subText: title || "",
             vibrate: options.vibrate || false,
