@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View } from 'react-native';
 import styled from 'styled-components/native';
-
 import { UserContext } from '../contexts/UserContext';
 
 import HomeIcon from '../assets/HomeIcon.svg';
@@ -20,16 +18,20 @@ const TabArea = styled.View`
 `;
 
 const TabItem = styled.TouchableOpacity`
-    border-radius: 100px;
+    border-radius: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-width: 2px;
-    border-color: ${({ isActive }) => (isActive ? '#858585' : '#ffffff')};
+    border-color: ${({ isActive }) => (isActive ? '#01969F' : '#ffffff')};
     padding: 5px;
-    background-color: ${({ isActive }) => (isActive ? '#ffffff' : '#ffffff')};
+    background-color: ${({ isActive }) => (isActive ? '#01969F' : '#ffffff')};
 `;
 
 const TabItemCenter = styled.TouchableOpacity`
     width: 70px;
     height: 70px;
+    display: flex;
     justify-content: center;
     align-items: center;
     background-color: #176B70;
@@ -45,7 +47,7 @@ const AvatarIcon = styled.Image`
 `;
 
 const Icon = styled.View`
-    fill: ${({ isActive }) => (isActive ? '#ffffff' : '#000000')};
+    fill: ${({ isActive }) => (isActive ? '#000000' : '#ffffff')};
     opacity: ${({ isActive }) => (isActive ? 1 : 1)};
 `;
 
@@ -70,7 +72,7 @@ export default ({ state, navigation }) => {
                     <SearchIcon width="25" height="25" />
                 </Icon>
             </TabItem>
-            <TabItemCenter onPress={() => goTo('Appointments')}>
+            <TabItemCenter onPress={() => goTo('Appointments')}> 
                 <CalendarIcon width="25" height="25" />
             </TabItemCenter>
             <TabItem isActive={activeTab === 'Favoritos'} onPress={() => goTo('Favoritos')}>

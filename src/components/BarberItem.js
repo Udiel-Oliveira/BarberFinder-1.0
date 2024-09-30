@@ -2,13 +2,16 @@ import React from "react";
 import styled from 'styled-components/native';
 import Arrow from '../assets/Flecha.svg';
 import Stars from '../components/Stars'
+import { TouchableOpacity } from 'react-native';
 
-const Area = styled.TouchableOpacity`
+const Area = styled(TouchableOpacity).attrs({
+  activeOpacity: 0.8 })`
     background-color: transparent;
     margin-bottom: 20px;
     border-radius: 20px;
     padding: 20px;
     flex-direction: row;
+    opacity: 1;
     border-bottom-width: 2px;
     border-bottom-color: #CCCCCC;
     
@@ -37,10 +40,11 @@ const SeeProfileButton = styled.View`
     align-items: center;
 `;
 
-const SeeProfileContent = styled.View`
+const SeeProfileContent = styled.TouchableOpacity`
     justify-content: center;
     border-radius: 10px;
     background-color: #000000;
+    opacity: 1;
     align-items: center;
     height: 50px;
     width: 50px;
